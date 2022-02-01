@@ -1,3 +1,4 @@
+ // SPDX license identifier
  pragma solidity >=0.4.21;
 
 import "./Token.sol";
@@ -32,5 +33,13 @@ import "./Token.sol";
 
         // Emit
         emit TokenPurchased(msg.sender, address(token), tokenAmount, rate);
+    }
+
+    function sellToken(uint _amount) public{
+        // Perforom sale to redeem eth
+        uint etherAmount = _amount / rate;
+        token.transferFrom(msg.sender, address(this), _amount);
+
+        payable(msg.sender).transfer(etherAmount);
     }
  }  
