@@ -15,6 +15,7 @@ contract("EthSwap", ([deployer, investor]) => {
 
         // Transfer all token to ethSwap
         await token.transfer(ethSwap.address, tokens("1000000")); 
+
     })
    
     // Helper
@@ -44,17 +45,18 @@ contract("EthSwap", ([deployer, investor]) => {
     });
 
     describe("buyTokens()", async ()=>{
-        let result;
         //Purchase tokens before each examples
         before(async()=>{
-            // Sell to ethSwap at fixed rate
+            await ethSwap.buyTokens({from: investor, value: web3.utils.toWei("1", "ether")})
+
+
             await token.approve(ethSwap.address, tokens('100'), {from: investor})
-            result = await ethSwap.sellToken(tokens('100'), {from: investor})
+            await ethSwap.sellToken(tokens('100'), {from: investor})
         });
 
-
         it("Allow user to instance purchase token from EthSwap for a fixed price", async()=>{
-         
+      
+
         })
     })
 })

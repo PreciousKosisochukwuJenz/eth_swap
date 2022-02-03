@@ -36,8 +36,17 @@ import "./Token.sol";
     }
 
     function sellToken(uint _amount) public{
-        // Perforom sale to redeem eth
+        
+        // User can't sell more than they have
+        require(token.balanceOf(msg.sender) >= _amount);
+
         uint etherAmount = _amount / rate;
+
+        // require that ethSwap has enough token
+        require(address(this).balance >= etherAmount);
+
+        
+        // Perforom sale to redeem eth
         token.transferFrom(msg.sender, address(this), _amount);
 
         payable(msg.sender).transfer(etherAmount);
